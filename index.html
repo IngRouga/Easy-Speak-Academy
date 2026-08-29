@@ -20,222 +20,131 @@
     --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
-
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    font-family:var(--sans);
-    color:var(--ink);
-    background:var(--paper);
-    -webkit-font-smoothing:antialiased;
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
-  }
-  h1,h2,h3{
-    font-family:var(--serif);
-    font-weight:600;
-    color:var(--navy-deep);
-    margin:0;
-    line-height:1.1;
-  }
+  body{margin:0; font-family:var(--sans); color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+  h1,h2,h3{font-family:var(--serif); font-weight:600; color:var(--navy-deep); margin:0; line-height:1.15;}
   p{margin:0;}
   a{color:inherit; text-decoration:none;}
   button{font-family:inherit; cursor:pointer;}
   img{max-width:100%; display:block;}
   :focus-visible{outline:3px solid var(--red); outline-offset:2px;}
-
   .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  .view{display:none;}
+  .view.active{display:block;}
 
   /* ===== HEADER ===== */
-  header.site{
-    position:sticky; top:0; z-index:50;
-    background:rgba(247,245,240,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 24px; max-width:1120px; margin:0 auto;
-  }
+  header.site{position:sticky; top:0; z-index:50; background:rgba(247,245,240,0.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:1120px; margin:0 auto;}
   .brand{display:flex; align-items:center; gap:10px; font-family:var(--serif); font-weight:700; font-size:1.2rem; color:var(--navy-deep);}
   .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--red); display:inline-block;}
-  nav.links{display:flex; gap:28px; font-size:0.92rem; font-weight:500; letter-spacing:.01em;}
-  nav.links a{position:relative; color:var(--ink-soft); padding:4px 0;}
+  nav.links{display:flex; gap:28px; font-size:0.92rem; font-weight:500;}
+  nav.links a{position:relative; color:var(--ink-soft); padding:4px 0; cursor:pointer;}
+  nav.links a.current{color:var(--navy-deep);}
   nav.links a:hover{color:var(--navy-deep);}
   nav.links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--red);transition:width .25s ease;}
-  nav.links a:hover::after{width:100%;}
-  .nav-cta{
-    background:var(--red); color:var(--white); padding:10px 20px;
-    border-radius:var(--radius); font-weight:600; font-size:0.88rem;
-    border:none; letter-spacing:.02em;
-  }
+  nav.links a:hover::after, nav.links a.current::after{width:100%;}
+  .nav-cta{background:var(--red); color:var(--white); padding:10px 20px; border-radius:var(--radius); font-weight:600; font-size:0.88rem; border:none;}
   .nav-cta:hover{background:var(--red-deep);}
   .burger{display:none; background:none; border:none; padding:8px;}
   .burger span{display:block; width:22px; height:2px; background:var(--navy-deep); margin:5px 0;}
-
-  @media (max-width:820px){
+  @media (max-width:860px){
     nav.links{display:none;}
     .burger{display:block;}
-    nav.links.open{
-      display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0;
-      background:var(--white); padding:20px 24px; gap:18px; border-bottom:1px solid var(--line);
-    }
+    nav.links.open{display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:var(--white); padding:20px 24px; gap:18px; border-bottom:1px solid var(--line);}
   }
 
-  /* ===== HERO ===== */
-  .hero{
-    position:relative;
-    padding:96px 24px 80px;
-    overflow:hidden;
-    background:
-      radial-gradient(1100px 500px at 85% -10%, rgba(217,30,43,0.08), transparent 60%),
-      linear-gradient(180deg, #FBF9F5 0%, var(--paper) 100%);
-  }
-  .hero-grid{
-    max-width:1120px; margin:0 auto;
-    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
-  }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-size:0.78rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--red-deep); margin-bottom:22px;
-  }
-  .eyebrow::before{content:"";width:26px;height:2px;background:var(--red);}
-  .hero h1{
-    font-size:clamp(2.3rem, 4.4vw, 3.5rem);
-    letter-spacing:-0.01em;
-    margin-bottom:22px;
-  }
-  .hero h1 em{font-style:normal; color:var(--red);}
-  .hero-sub{
-    font-size:1.08rem; color:var(--ink-soft); max-width:480px; line-height:1.65; margin-bottom:34px;
-  }
-  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn-primary{
-    background:var(--navy-deep); color:var(--white); padding:15px 30px;
-    border-radius:var(--radius); font-weight:600; font-size:0.95rem; border:none;
-    box-shadow:0 8px 20px rgba(8,23,51,0.18);
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
-  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(8,23,51,0.24);}
-  .btn-primary.red{background:var(--red); box-shadow:0 8px 20px rgba(217,30,43,0.22);}
-  .btn-primary.red:hover{background:var(--red-deep);}
-  .btn-ghost{
-    background:transparent; color:var(--navy-deep); padding:15px 26px;
-    border-radius:var(--radius); font-weight:600; font-size:0.95rem; border:1px solid var(--line);
-  }
-  .btn-ghost:hover{border-color:var(--navy-deep);}
-
-  .hero-panel{
-    background:var(--navy-deep);
-    border-radius:8px;
-    padding:38px 34px;
-    position:relative;
-    color:var(--white);
-    box-shadow:0 30px 60px -20px rgba(8,23,51,0.45);
-  }
-  .hero-panel::before{
-    content:"";position:absolute; top:0; left:0; right:0; height:5px;
-    background:linear-gradient(90deg, var(--red), var(--navy) 60%, var(--red));
-    border-radius:8px 8px 0 0;
-  }
-  .level-badges{display:flex; gap:6px; margin-bottom:26px;}
-  .level-badges span{
-    flex:1; text-align:center; padding:8px 0; font-size:0.72rem; font-weight:700;
-    border:1px solid rgba(255,255,255,0.18); border-radius:3px; color:rgba(255,255,255,0.55);
-  }
-  .level-badges span.on{background:var(--red); border-color:var(--red); color:var(--white);}
-  .hero-panel h3{color:var(--white); font-size:1.3rem; margin-bottom:10px;}
-  .hero-panel p{color:rgba(255,255,255,0.7); font-size:0.94rem; line-height:1.6; margin-bottom:24px;}
-  .hero-meta{display:flex; gap:22px; border-top:1px solid rgba(255,255,255,0.14); padding-top:20px;}
-  .hero-meta div{font-size:0.78rem; color:rgba(255,255,255,0.55);}
-  .hero-meta strong{display:block; color:var(--white); font-family:var(--serif); font-size:1.15rem; font-weight:600;}
-
-  @media (max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
-    .hero-panel{order:-1;}
-  }
-
-  /* ===== SECTION SHELL ===== */
   section{padding:88px 24px;}
-  .section-head{max-width:620px; margin:0 auto 52px; text-align:center;}
+  .section-head{max-width:640px; margin:0 auto 52px; text-align:center;}
   .section-head .eyebrow{justify-content:center;}
   .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);}
   .section-head p{color:var(--ink-soft); margin-top:14px; line-height:1.6;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:0.78rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--red-deep); margin-bottom:22px;}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--red);}
+
+  .btn-primary{background:var(--navy-deep); color:var(--white); padding:15px 30px; border-radius:var(--radius); font-weight:600; font-size:0.95rem; border:none; box-shadow:0 8px 20px rgba(8,23,51,0.18); transition:transform .18s ease, box-shadow .18s ease;}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(8,23,51,0.24);}
+  .btn-primary.red{background:var(--red); box-shadow:0 8px 20px rgba(217,30,43,0.22);}
+  .btn-primary.red:hover{background:var(--red-deep);}
+  .btn-primary.sm{padding:11px 20px; font-size:0.86rem;}
+  .btn-ghost{background:transparent; color:var(--navy-deep); padding:15px 26px; border-radius:var(--radius); font-weight:600; font-size:0.95rem; border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--navy-deep);}
+  .btn-ghost.sm{padding:11px 20px; font-size:0.86rem;}
+  .btn-text{background:none; border:none; color:var(--ink-soft); font-weight:600; font-size:0.9rem; padding:10px;}
+  .btn-text:hover{color:var(--navy-deep);}
+
+  /* ===== HOME HERO ===== */
+  .hero{position:relative; padding:96px 24px 80px; overflow:hidden; background:radial-gradient(1100px 500px at 85% -10%, rgba(217,30,43,0.08), transparent 60%), linear-gradient(180deg, #FBF9F5 0%, var(--paper) 100%);}
+  .hero-grid{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;}
+  .hero h1{font-size:clamp(2.2rem, 4.2vw, 3.3rem); letter-spacing:-0.01em; margin-bottom:22px;}
+  .hero h1 em{font-style:normal; color:var(--red);}
+  .hero-sub{font-size:1.06rem; color:var(--ink-soft); max-width:480px; line-height:1.65; margin-bottom:34px;}
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-panel{background:var(--navy-deep); border-radius:8px; padding:38px 34px; position:relative; color:var(--white); box-shadow:0 30px 60px -20px rgba(8,23,51,0.45);}
+  .hero-panel::before{content:"";position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--red), var(--navy) 60%, var(--red)); border-radius:8px 8px 0 0;}
+  .level-badges{display:flex; gap:6px; margin-bottom:26px;}
+  .level-badges span{flex:1; text-align:center; padding:8px 0; font-size:0.72rem; font-weight:700; border:1px solid rgba(255,255,255,0.18); border-radius:3px; color:rgba(255,255,255,0.55);}
+  .level-badges span.on{background:var(--red); border-color:var(--red); color:var(--white);}
+  .hero-panel h3{color:var(--white); font-size:1.25rem; margin-bottom:10px;}
+  .hero-panel p{color:rgba(255,255,255,0.7); font-size:0.92rem; line-height:1.6; margin-bottom:24px;}
+  .hero-meta{display:flex; gap:22px; border-top:1px solid rgba(255,255,255,0.14); padding-top:20px;}
+  .hero-meta div{font-size:0.78rem; color:rgba(255,255,255,0.55);}
+  .hero-meta strong{display:block; color:var(--white); font-family:var(--serif); font-size:1.1rem; font-weight:600;}
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} .hero-panel{order:-1;} }
+
+  .funnel-strip{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:44px 24px;}
+  .funnel-row{max-width:1120px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; font-size:0.86rem; font-weight:600; color:var(--ink-soft); text-align:center;}
+  .funnel-row .step{background:var(--paper-dim); padding:10px 16px; border-radius:20px; color:var(--navy-deep);}
+  .funnel-row .arrow{color:var(--red); font-weight:700;}
+
+  /* ===== FEATURED BOOKS teaser on home ===== */
+  .teaser-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:820px){ .teaser-grid{grid-template-columns:1fr; max-width:380px; margin:0 auto;} }
+
+  /* ===== PRODUCT CARD ===== */
+  .product-card{background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden; display:flex; flex-direction:column; transition:transform .18s ease, box-shadow .18s ease;}
+  .product-card:hover{transform:translateY(-3px); box-shadow:0 16px 30px -14px rgba(8,23,51,0.2);}
+  .product-cover{aspect-ratio:3/4; background:linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 65%); display:flex; flex-direction:column; justify-content:center; align-items:center; padding:22px; text-align:center; position:relative;}
+  .product-cover .band{width:28px; height:3px; background:var(--red); margin-bottom:14px;}
+  .product-cover h4{color:var(--white); font-family:var(--serif); font-size:1.02rem; line-height:1.3;}
+  .product-cover .lvl-pin{position:absolute; top:12px; left:12px; background:rgba(255,255,255,0.12); color:var(--white); font-size:0.68rem; font-weight:700; padding:4px 9px; border-radius:10px; letter-spacing:.04em;}
+  .product-body{padding:20px 20px 22px; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .product-body h3{font-size:1.02rem;}
+  .product-body p.desc{color:var(--ink-soft); font-size:0.86rem; line-height:1.55; flex:1;}
+  .product-foot{display:flex; align-items:center; justify-content:space-between; margin-top:6px;}
+  .price{font-family:var(--serif); font-weight:700; color:var(--navy-deep); font-size:1.05rem;}
+  .price .old{color:var(--ink-soft); font-weight:400; text-decoration:line-through; font-size:0.85rem; margin-right:6px;}
 
   /* ===== TEST SECTION ===== */
   .test-section{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .test-shell{
-    max-width:680px; margin:0 auto;
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:44px 40px;
-    position:relative;
-    min-height:420px;
-  }
+  .test-shell{max-width:680px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:44px 40px; position:relative; min-height:420px;}
   @media (max-width:600px){ .test-shell{padding:30px 22px;} }
-
   .test-intro{text-align:center;}
-  .test-intro h3{font-size:1.7rem; margin-bottom:14px;}
-  .test-intro p{color:var(--ink-soft); line-height:1.6; margin-bottom:6px;}
-  .test-facts{
-    display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
-    margin:26px 0 32px; font-size:0.82rem; font-weight:600; color:var(--navy-deep);
-  }
+  .test-intro h3{font-size:1.6rem; margin-bottom:14px;}
+  .test-intro p{color:var(--ink-soft); line-height:1.6;}
+  .test-facts{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:26px 0 32px; font-size:0.82rem; font-weight:600; color:var(--navy-deep);}
   .test-facts span{background:var(--paper-dim); padding:8px 14px; border-radius:20px;}
-
-  .progress-track{
-    height:6px; background:var(--paper-dim); border-radius:4px; overflow:hidden; margin-bottom:28px;
-  }
-  .progress-fill{
-    height:100%; background:linear-gradient(90deg, var(--red), var(--navy)); width:0%;
-    transition:width .4s ease;
-  }
-  .q-meta{
-    display:flex; justify-content:space-between; align-items:center;
-    font-size:0.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-    color:var(--ink-soft); margin-bottom:18px;
-  }
+  .progress-track{height:6px; background:var(--paper-dim); border-radius:4px; overflow:hidden; margin-bottom:28px;}
+  .progress-fill{height:100%; background:linear-gradient(90deg, var(--red), var(--navy)); width:0%; transition:width .4s ease;}
+  .q-meta{display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:18px;}
   .q-meta .lvl-tag{color:var(--red-deep); background:rgba(217,30,43,0.08); padding:4px 10px; border-radius:12px;}
-  .q-text{font-family:var(--serif); font-size:1.35rem; color:var(--navy-deep); line-height:1.45; margin-bottom:26px; min-height:2.6em;}
+  .q-text{font-family:var(--serif); font-size:1.3rem; color:var(--navy-deep); line-height:1.45; margin-bottom:26px; min-height:2.6em;}
   .options{display:flex; flex-direction:column; gap:10px;}
-  .opt{
-    display:flex; align-items:center; gap:14px;
-    padding:14px 16px; border:1px solid var(--line); border-radius:6px;
-    background:var(--white); text-align:left; font-size:0.98rem; color:var(--ink);
-    transition:border-color .15s ease, background .15s ease;
-    width:100%;
-  }
-  .opt .letter{
-    width:26px; height:26px; border-radius:50%; border:1.5px solid var(--line);
-    display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700;
-    color:var(--ink-soft); flex-shrink:0;
-  }
+  .opt{display:flex; align-items:center; gap:14px; padding:14px 16px; border:1px solid var(--line); border-radius:6px; background:var(--white); text-align:left; font-size:0.98rem; color:var(--ink); transition:border-color .15s ease, background .15s ease; width:100%;}
+  .opt .letter{width:26px; height:26px; border-radius:50%; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; color:var(--ink-soft); flex-shrink:0;}
   .opt:hover{border-color:var(--navy); background:rgba(15,35,80,0.03);}
   .opt.selected{border-color:var(--red); background:rgba(217,30,43,0.05);}
   .opt.selected .letter{background:var(--red); border-color:var(--red); color:var(--white);}
-
   .test-nav{display:flex; justify-content:space-between; align-items:center; margin-top:32px;}
-  .btn-text{background:none; border:none; color:var(--ink-soft); font-weight:600; font-size:0.9rem; padding:10px;}
-  .btn-text:hover{color:var(--navy-deep);}
-  .btn-next{
-    background:var(--navy-deep); color:var(--white); padding:13px 28px; border-radius:var(--radius);
-    font-weight:600; font-size:0.92rem; border:none; opacity:0.4; pointer-events:none;
-    transition:opacity .2s ease;
-  }
+  .btn-next{background:var(--navy-deep); color:var(--white); padding:13px 28px; border-radius:var(--radius); font-weight:600; font-size:0.92rem; border:none; opacity:0.4; pointer-events:none; transition:opacity .2s ease;}
   .btn-next.active{opacity:1; pointer-events:auto;}
   .btn-next.active:hover{background:var(--navy);}
 
-  /* results */
+  /* ===== RESULT ===== */
   .result-view{display:none; text-align:center;}
-  .result-badge{
-    display:inline-block; padding:8px 18px; border-radius:20px; background:var(--navy-deep);
-    color:var(--white); font-weight:700; font-size:0.78rem; letter-spacing:.08em; margin-bottom:22px;
-  }
-  .result-level{font-family:var(--serif); font-size:2.4rem; color:var(--navy-deep); margin-bottom:6px;}
+  .result-badge{display:inline-block; padding:8px 18px; border-radius:20px; background:var(--navy-deep); color:var(--white); font-weight:700; font-size:0.78rem; letter-spacing:.08em; margin-bottom:22px;}
+  .result-level{font-family:var(--serif); font-size:2.2rem; color:var(--navy-deep); margin-bottom:6px;}
   .result-score{color:var(--ink-soft); font-weight:600; font-size:0.95rem; margin-bottom:22px;}
   .result-text{max-width:480px; margin:0 auto 34px; color:var(--ink-soft); line-height:1.65; font-size:0.98rem;}
   .result-scale{display:flex; gap:5px; margin:0 auto 34px; max-width:420px;}
@@ -243,80 +152,106 @@
   .result-scale span.filled{background:var(--red);}
   .result-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;}
 
-  .next-step{
-    border-top:1px solid var(--line); margin-top:38px; padding-top:34px;
-  }
-  .next-step h4{font-family:var(--serif); font-size:1.15rem; color:var(--navy-deep); margin-bottom:8px;}
-  .next-step p{color:var(--ink-soft); font-size:0.92rem; margin-bottom:18px;}
+  /* recommendation block appended after result, full width outside shell */
+  .reco-block{background:var(--paper-dim); border-top:1px solid var(--line);}
+  .reco-head{text-align:center; max-width:560px; margin:0 auto 40px;}
+  .reco-main{max-width:1120px; margin:0 auto 50px;}
+  .reco-main-inner{display:grid; grid-template-columns:0.7fr 1.3fr; gap:40px; align-items:center; background:var(--white); border:1px solid var(--line); border-radius:10px; padding:34px;}
+  @media (max-width:760px){ .reco-main-inner{grid-template-columns:1fr;} }
+  .reco-main .product-cover{border-radius:6px;}
+  .reco-more-label{max-width:1120px; margin:0 auto 20px; font-weight:700; color:var(--navy-deep); font-family:var(--serif); font-size:1.1rem;}
+  .reco-more-grid{max-width:1120px; margin:0 auto 44px; display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media (max-width:700px){ .reco-more-grid{grid-template-columns:1fr;} }
+  .bundle-card{max-width:1120px; margin:0 auto; background:var(--navy-deep); border-radius:10px; padding:36px; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; color:var(--white);}
+  .bundle-card h4{color:var(--white); font-family:var(--serif); font-size:1.25rem; margin-bottom:8px;}
+  .bundle-card p{color:rgba(255,255,255,0.7); font-size:0.9rem; max-width:440px;}
+  .bundle-price{text-align:right;}
+  .bundle-price .old{display:block; color:rgba(255,255,255,0.5); text-decoration:line-through; font-size:0.9rem;}
+  .bundle-price .new{font-family:var(--serif); font-size:1.7rem; color:var(--white); font-weight:700;}
 
-  .social-row{
-    display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:30px;
-  }
-  .social-row a{
-    padding:10px 18px; border:1px solid var(--line); border-radius:20px; font-size:0.85rem;
-    font-weight:600; color:var(--navy-deep);
-  }
+  .social-row{display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:14px;}
+  .social-row a{padding:10px 18px; border:1px solid var(--line); border-radius:20px; font-size:0.85rem; font-weight:600; color:var(--navy-deep);}
   .social-row a:hover{border-color:var(--navy-deep); background:var(--paper-dim);}
 
-  .lead-form{
-    max-width:420px; margin:34px auto 0; text-align:left;
-    border-top:1px solid var(--line); padding-top:30px;
-  }
+  .lead-form{max-width:420px; margin:34px auto 0; text-align:left; border-top:1px solid var(--line); padding-top:30px;}
   .lead-form p.lead-title{font-weight:700; color:var(--navy-deep); margin-bottom:4px; text-align:center; font-size:1rem;}
   .lead-form p.lead-sub{color:var(--ink-soft); font-size:0.88rem; text-align:center; margin-bottom:18px;}
   .field{margin-bottom:12px;}
   .field label{display:block; font-size:0.8rem; font-weight:600; color:var(--ink-soft); margin-bottom:6px;}
-  .field input{
-    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:6px;
-    font-size:0.95rem; font-family:inherit; background:var(--white);
-  }
+  .field input{width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:6px; font-size:0.95rem; font-family:inherit; background:var(--white);}
   .field input:focus{border-color:var(--navy);}
-  .lead-submit{
-    width:100%; background:var(--red); color:var(--white); padding:14px; border:none;
-    border-radius:6px; font-weight:700; font-size:0.92rem; margin-top:6px;
-  }
+  .lead-submit{width:100%; background:var(--red); color:var(--white); padding:14px; border:none; border-radius:6px; font-weight:700; font-size:0.92rem; margin-top:6px;}
   .lead-submit:hover{background:var(--red-deep);}
   .lead-confirm{display:none; text-align:center; color:var(--navy-deep); font-weight:600; padding:16px 0;}
 
-  /* ===== LESSONS / FEATURES ===== */
-  .features{background:var(--paper);}
-  .feature-grid{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
-    background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;
-  }
+  /* ===== FEATURES ===== */
+  .feature-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
   .feature{background:var(--white); padding:36px 30px;}
   .feature .num{font-family:var(--serif); font-size:0.85rem; color:var(--red-deep); font-weight:700; margin-bottom:14px;}
-  .feature h3{font-size:1.15rem; margin-bottom:10px;}
+  .feature h3{font-size:1.1rem; margin-bottom:10px;}
   .feature p{color:var(--ink-soft); font-size:0.92rem; line-height:1.6;}
   @media (max-width:760px){ .feature-grid{grid-template-columns:1fr;} }
 
-  /* ===== BOOK ===== */
-  .book{
-    background:var(--navy-deep); color:var(--white);
-  }
-  .book-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px; align-items:center; max-width:1120px; margin:0 auto;}
-  .book-cover{
-    aspect-ratio:3/4; background:linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 60%);
-    border:1px solid rgba(255,255,255,0.15); border-radius:6px; display:flex; flex-direction:column;
-    justify-content:center; align-items:center; padding:30px; text-align:center;
-    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
-  }
-  .book-cover .band{width:36px; height:4px; background:var(--red); margin-bottom:20px;}
-  .book-cover h4{color:var(--white); font-family:var(--serif); font-size:1.3rem; line-height:1.3; margin-bottom:14px;}
-  .book-cover p{color:rgba(255,255,255,0.6); font-size:0.82rem;}
-  .book-copy .eyebrow{color:#FF8A93;}
-  .book-copy h2{color:var(--white); margin-bottom:18px; font-size:clamp(1.6rem,3vw,2.1rem);}
-  .book-copy p.desc{color:rgba(255,255,255,0.72); line-height:1.7; margin-bottom:26px; max-width:480px;}
-  .book-list{list-style:none; padding:0; margin:0 0 30px; display:flex; flex-direction:column; gap:12px;}
-  .book-list li{display:flex; gap:12px; color:rgba(255,255,255,0.85); font-size:0.94rem;}
-  .book-list li::before{content:"—"; color:var(--red);}
-  @media (max-width:840px){ .book-grid{grid-template-columns:1fr;} .book-cover{max-width:280px;} }
+  /* ===== STORE PAGE ===== */
+  .store-head{background:var(--white); border-bottom:1px solid var(--line); padding:64px 24px 40px; text-align:center;}
+  .store-layout{max-width:1120px; margin:0 auto; padding:44px 24px; display:grid; grid-template-columns:220px 1fr; gap:40px;}
+  @media (max-width:820px){ .store-layout{grid-template-columns:1fr; padding:32px 24px;} }
+  .filter-group{margin-bottom:28px;}
+  .filter-group h4{font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-bottom:12px;}
+  .filter-opt{display:flex; align-items:center; gap:8px; font-size:0.9rem; padding:6px 0; color:var(--ink); cursor:pointer;}
+  .filter-opt input{accent-color:var(--red);}
+  .store-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:900px){ .store-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .store-grid{grid-template-columns:1fr;} }
+  .store-empty{color:var(--ink-soft); text-align:center; padding:60px 0; font-size:0.95rem;}
+  .sort-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; font-size:0.88rem; color:var(--ink-soft);}
+  .sort-row select{padding:8px 12px; border:1px solid var(--line); border-radius:6px; font-family:inherit; background:var(--white);}
 
-  /* ===== FOOTER ===== */
+  /* ===== PRODUCT PAGE ===== */
+  .product-page{max-width:1120px; margin:0 auto; padding:64px 24px;}
+  .breadcrumb{font-size:0.84rem; color:var(--ink-soft); margin-bottom:30px;}
+  .breadcrumb a{color:var(--navy-deep); font-weight:600; cursor:pointer;}
+  .product-detail{display:grid; grid-template-columns:0.7fr 1.3fr; gap:54px; align-items:start;}
+  @media (max-width:800px){ .product-detail{grid-template-columns:1fr;} }
+  .product-detail .product-cover{aspect-ratio:3/4; border-radius:8px;}
+  .pd-level{display:inline-block; background:rgba(217,30,43,0.08); color:var(--red-deep); font-weight:700; font-size:0.76rem; letter-spacing:.06em; padding:6px 12px; border-radius:12px; margin-bottom:16px;}
+  .product-detail h1{font-size:1.9rem; margin-bottom:16px;}
+  .pd-desc{color:var(--ink-soft); line-height:1.7; margin-bottom:28px; font-size:1rem;}
+  .pd-learn{margin-bottom:30px;}
+  .pd-learn h4{font-family:var(--serif); font-size:1.05rem; color:var(--navy-deep); margin-bottom:14px;}
+  .pd-learn ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .pd-learn li{display:flex; gap:10px; color:var(--ink); font-size:0.94rem;}
+  .pd-learn li::before{content:"—"; color:var(--red); font-weight:700;}
+  .pd-price-row{display:flex; align-items:center; gap:20px; padding:24px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:26px;}
+  .pd-price{font-family:var(--serif); font-size:1.7rem; color:var(--navy-deep); font-weight:700;}
+  .pd-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .pd-note{font-size:0.85rem; color:var(--ink-soft); margin-top:20px;}
+  .pd-related{margin-top:70px;}
+  .pd-related h3{font-size:1.2rem; margin-bottom:24px;}
+  .pd-related-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:760px){ .pd-related-grid{grid-template-columns:1fr;} }
+
+  /* ===== CHECKOUT MODAL ===== */
+  .modal-overlay{display:none; position:fixed; inset:0; background:rgba(8,23,51,0.55); z-index:100; align-items:center; justify-content:center; padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:var(--white); border-radius:10px; max-width:420px; width:100%; padding:36px 32px; text-align:center; position:relative;}
+  .modal-close{position:absolute; top:14px; right:14px; background:none; border:none; font-size:1.3rem; color:var(--ink-soft); padding:6px;}
+  .modal-box h3{font-size:1.3rem; margin-bottom:12px;}
+  .modal-box p{color:var(--ink-soft); font-size:0.92rem; line-height:1.6; margin-bottom:22px;}
+
+  /* ===== BOOK LANDING (single "Livres" intro) ===== */
+  .book-intro{background:var(--navy-deep); color:var(--white);}
+  .book-intro-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px; align-items:center; max-width:1120px; margin:0 auto;}
+  @media (max-width:840px){ .book-intro-grid{grid-template-columns:1fr;} }
+  .book-intro-grid h2{color:var(--white);}
+  .book-intro-grid p{color:rgba(255,255,255,0.72); line-height:1.7;}
+  .book-intro .eyebrow{color:#FF8A93;}
+
   footer{background:var(--navy-deep); color:rgba(255,255,255,0.55); padding:50px 24px 30px; border-top:1px solid rgba(255,255,255,0.08);}
   .footer-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; max-width:1120px; margin:0 auto 30px;}
   .footer-brand{font-family:var(--serif); color:var(--white); font-size:1.1rem; font-weight:700; margin-bottom:8px;}
   .footer-links{display:flex; gap:26px; flex-wrap:wrap; font-size:0.88rem;}
+  .footer-links a{cursor:pointer;}
   .footer-links a:hover{color:var(--white);}
   .footer-bottom{max-width:1120px; margin:0 auto; border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
 </style>
@@ -325,183 +260,267 @@
 
 <header class="site">
   <div class="nav">
-    <div class="brand"><span class="dot"></span>EASY SPEAK ACADEMY</div>
+    <div class="brand" onclick="Router.go('home')" style="cursor:pointer;"><span class="dot"></span>EASY SPEAK ACADEMY</div>
     <nav class="links" id="navLinks">
-      <a href="#accueil">Accueil</a>
-      <a href="#test">Testez votre niveau</a>
-      <a href="#lecons">Leçons</a>
-      <a href="#livre">Livre</a>
-      <a href="#contact">Contact</a>
+      <a data-route="home">Accueil</a>
+      <a data-route="test">Testez votre niveau</a>
+      <a data-route="store">Livres</a>
+      <a data-route="home" data-anchor="lecons">Leçons</a>
+      <a data-route="home" data-anchor="contact">Contact</a>
     </nav>
-    <button class="nav-cta" onclick="document.getElementById('test').scrollIntoView({behavior:'smooth'})">Tester mon niveau</button>
+    <button class="nav-cta" onclick="Router.go('test')">Tester mon niveau</button>
     <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<section class="hero" id="accueil">
-  <div class="hero-grid">
-    <div>
-      <div class="eyebrow">Learn · Speak · Grow</div>
-      <h1>Améliorez votre anglais.<br>Parlez avec <em>confiance</em>.</h1>
-      <p class="hero-sub">Apprenez l'anglais pratique grâce à des leçons simples, des expressions du quotidien et des exercices conçus pour les francophones.</p>
-      <div class="hero-actions">
-        <button class="btn-primary red" onclick="document.getElementById('test').scrollIntoView({behavior:'smooth'})">Tester mon niveau</button>
-        <a href="#lecons" class="btn-ghost">Commencer à apprendre</a>
-      </div>
-    </div>
-    <div class="hero-panel">
-      <div class="level-badges">
-        <span>A1</span><span class="on">A2</span><span>B1</span><span>B2</span><span>C1</span>
-      </div>
-      <h3>Quel est votre niveau ?</h3>
-      <p>20 questions pensées pour évaluer votre grammaire, votre vocabulaire et votre compréhension — en 5 minutes.</p>
-      <div class="hero-meta">
-        <div><strong>20</strong>Questions</div>
-        <div><strong>5 min</strong>Durée</div>
-        <div><strong>A1–C1</strong>Niveaux</div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ============================================================ HOME VIEW ============================================================ -->
+<div class="view" id="view-home">
 
-<section class="test-section" id="test">
-  <div class="section-head">
-    <div class="eyebrow">Test de niveau</div>
-    <h2>Testez votre niveau d'anglais</h2>
-    <p>Découvrez votre niveau estimé en seulement 5 minutes.</p>
-  </div>
-
-  <div class="test-shell">
-
-    <!-- INTRO -->
-    <div class="test-intro" id="viewIntro">
-      <h3>TESTEZ VOTRE NIVEAU D'ANGLAIS</h3>
-      <p>Découvrez votre niveau estimé en seulement 5 minutes.</p>
-      <div class="test-facts">
-        <span>20 questions</span>
-        <span>Gratuit</span>
-        <span>Résultat immédiat</span>
-      </div>
-      <button class="btn-primary red" id="startBtn">COMMENCER LE TEST</button>
-    </div>
-
-    <!-- QUESTION -->
-    <div id="viewQuestion" style="display:none;">
-      <div class="q-meta">
-        <span id="qCounter">Question 1 sur 20</span>
-        <span class="lvl-tag" id="qLevel">A1</span>
-      </div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="q-text" id="qText"></div>
-      <div class="options" id="qOptions"></div>
-      <div class="test-nav">
-        <button class="btn-text" id="prevBtn">← Précédent</button>
-        <button class="btn-next" id="nextBtn">Suivant →</button>
-      </div>
-    </div>
-
-    <!-- RESULT -->
-    <div class="result-view" id="viewResult">
-      <div class="result-badge">VOTRE NIVEAU ESTIMÉ</div>
-      <div class="result-level" id="resultLevel">B1 — INTERMÉDIAIRE</div>
-      <div class="result-score" id="resultScore">Score : 13/20</div>
-      <div class="result-scale" id="resultScale"></div>
-      <p class="result-text" id="resultText"></p>
-      <div class="result-actions">
-        <button class="btn-primary red" onclick="window.location.href='#lecons'">EXPLORER EASY SPEAK ACADEMY</button>
-        <button class="btn-ghost" id="restartBtn">Recommencer le test</button>
-      </div>
-
-      <div class="next-step">
-        <h4>Envie de progresser chaque jour en anglais ?</h4>
-        <p>Suivez Easy Speak Academy pour des leçons pratiques, des expressions du quotidien et de l'entraînement à l'oral.</p>
-        <div class="social-row">
-          <a href="#" target="_blank" rel="noopener">TikTok</a>
-          <a href="#" target="_blank" rel="noopener">YouTube</a>
-          <a href="#" target="_blank" rel="noopener">Instagram</a>
-          <a href="#" target="_blank" rel="noopener">Facebook</a>
+  <section class="hero" id="accueil">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Learn · Speak · Grow</div>
+        <h1>Améliorez votre anglais.<br>Parlez avec <em>confiance</em>.</h1>
+        <p class="hero-sub">Apprenez l'anglais pratique grâce à des leçons, des ressources et des livres conçus pour les francophones.</p>
+        <div class="hero-actions">
+          <button class="btn-primary red" onclick="Router.go('test')">Tester mon niveau</button>
+          <button class="btn-ghost" onclick="Router.go('store')">Découvrir les livres</button>
         </div>
+      </div>
+      <div class="hero-panel">
+        <div class="level-badges"><span>A1</span><span class="on">A2</span><span>B1</span><span>B2</span><span>C1</span></div>
+        <h3>Quel est votre niveau ?</h3>
+        <p>20 questions pour évaluer votre grammaire, votre vocabulaire et votre compréhension — puis des livres choisis pour votre niveau.</p>
+        <div class="hero-meta">
+          <div><strong>20</strong>Questions</div>
+          <div><strong>5 min</strong>Durée</div>
+          <div><strong>Gratuit</strong>Test</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="funnel-strip">
+    <div class="funnel-row">
+      <span class="step">Test gratuit</span><span class="arrow">→</span>
+      <span class="step">Votre niveau</span><span class="arrow">→</span>
+      <span class="step">Livres recommandés</span><span class="arrow">→</span>
+      <span class="step">Vous progressez</span>
+    </div>
+  </div>
+
+  <section id="home-featured" style="background:var(--paper);">
+    <div class="section-head">
+      <div class="eyebrow">Notre bibliothèque</div>
+      <h2>Des livres pour chaque niveau</h2>
+      <p>Du niveau débutant à avancé, chaque livre cible des expressions et une grammaire précises, avec des explications en français.</p>
+    </div>
+    <div class="teaser-grid" id="homeFeaturedGrid"></div>
+    <div style="text-align:center; margin-top:36px;">
+      <button class="btn-ghost" onclick="Router.go('store')">Voir tous les livres</button>
+    </div>
+  </section>
+
+  <section class="features" id="lecons" style="background:var(--white);">
+    <div class="section-head">
+      <div class="eyebrow">Nos leçons</div>
+      <h2>Une méthode pensée pour les francophones</h2>
+      <p>Chaque leçon cible les difficultés typiques des apprenants francophones — prononciation, faux-amis, structures de phrases.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature"><div class="num">01</div><h3>Expressions du quotidien</h3><p>Apprenez à parler comme un natif dans les situations de tous les jours : au travail, en voyage, entre amis.</p></div>
+      <div class="feature"><div class="num">02</div><h3>Grammaire sans douleur</h3><p>Des explications claires en français pour comprendre enfin les temps, les prépositions et les structures anglaises.</p></div>
+      <div class="feature"><div class="num">03</div><h3>Pratique à l'oral</h3><p>Des exercices conçus pour vous faire parler avec confiance, sans peur de l'accent ou des erreurs.</p></div>
+    </div>
+  </section>
+
+  <section class="book-intro">
+    <div class="book-intro-grid">
+      <div class="product-cover" style="aspect-ratio:3/4; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+        <div class="band"></div>
+        <h4>SPEAK ENGLISH<br>WITH CONFIDENCE</h4>
+      </div>
+      <div>
+        <div class="eyebrow">Notre bibliothèque</div>
+        <h2>Des livres numériques pour progresser à votre rythme</h2>
+        <p style="margin-bottom:26px;">Chaque livre est conçu pour un niveau précis, avec des expressions réelles, des exemples concrets et des explications simples pour parler anglais avec naturel.</p>
+        <button class="btn-primary red" onclick="Router.go('store')">Découvrir les livres</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================================================ TEST VIEW ============================================================ -->
+<div class="view" id="view-test">
+  <section class="test-section" style="border-top:none; padding-top:64px;">
+    <div class="section-head">
+      <div class="eyebrow">Test de niveau</div>
+      <h2>Testez votre niveau d'anglais</h2>
+      <p>Découvrez votre niveau estimé en seulement 5 minutes.</p>
+    </div>
+
+    <div class="test-shell">
+      <div class="test-intro" id="viewIntro">
+        <h3>TESTEZ VOTRE NIVEAU D'ANGLAIS</h3>
+        <p>Découvrez votre niveau estimé en seulement 5 minutes.</p>
+        <div class="test-facts"><span>20 questions</span><span>Gratuit</span><span>Résultat immédiat</span></div>
+        <button class="btn-primary red" id="startBtn">COMMENCER LE TEST</button>
+      </div>
+
+      <div id="viewQuestion" style="display:none;">
+        <div class="q-meta"><span id="qCounter">Question 1 sur 20</span><span class="lvl-tag" id="qLevel">A1</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="test-nav">
+          <button class="btn-text" id="prevBtn">← Précédent</button>
+          <button class="btn-next" id="nextBtn">Suivant →</button>
+        </div>
+      </div>
+
+      <div class="result-view" id="viewResult">
+        <div class="result-badge">VOTRE NIVEAU ESTIMÉ</div>
+        <div class="result-level" id="resultLevel">B1 — INTERMÉDIAIRE</div>
+        <div class="result-score" id="resultScore">Score : 13/20</div>
+        <div class="result-scale" id="resultScale"></div>
+        <p class="result-text" id="resultText"></p>
+        <div class="result-actions">
+          <button class="btn-primary red" id="seeRecoBtn">VOIR MES RECOMMANDATIONS</button>
+          <button class="btn-ghost" id="restartBtn">Recommencer le test</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- recommendations block, shown after result -->
+  <section class="reco-block" id="recoBlock" style="display:none;">
+    <div class="reco-head">
+      <div class="eyebrow">Recommandé pour vous</div>
+      <h2>Nous avons sélectionné ces ressources pour vous</h2>
+      <p id="recoLevelLine">Sur la base de votre niveau estimé.</p>
+    </div>
+
+    <div class="reco-main" id="recoMain"></div>
+
+    <div class="reco-more-label">Vous souhaitez aller plus loin ?</div>
+    <div class="reco-more-grid" id="recoMoreGrid"></div>
+
+    <div class="bundle-card" id="bundleCard"></div>
+
+    <div style="max-width:1120px; margin:56px auto 0; text-align:center; border-top:1px solid var(--line); padding-top:40px;">
+      <h4 style="font-family:var(--serif); font-size:1.1rem; color:var(--navy-deep); margin-bottom:8px;">Envie de progresser chaque jour en anglais ?</h4>
+      <p style="color:var(--ink-soft); font-size:0.92rem; max-width:480px; margin:0 auto;">Suivez Easy Speak Academy pour des leçons pratiques, des expressions du quotidien et de l'entraînement à l'oral.</p>
+      <div class="social-row">
+        <a href="#" target="_blank" rel="noopener" onclick="return false;">TikTok</a>
+        <a href="#" target="_blank" rel="noopener" onclick="return false;">YouTube</a>
+        <a href="#" target="_blank" rel="noopener" onclick="return false;">Instagram</a>
+        <a href="#" target="_blank" rel="noopener" onclick="return false;">Facebook</a>
       </div>
 
       <div class="lead-form" id="leadForm">
         <p class="lead-title">Envie de recevoir des leçons et ressources utiles ?</p>
         <p class="lead-sub">Recevez gratuitement des expressions et conseils pour progresser en anglais.</p>
         <form id="leadFormEl">
-          <div class="field">
-            <label for="leadName">Prénom</label>
-            <input type="text" id="leadName" required>
-          </div>
-          <div class="field">
-            <label for="leadEmail">Adresse e-mail</label>
-            <input type="email" id="leadEmail" required>
-          </div>
+          <div class="field"><label for="leadName">Prénom</label><input type="text" id="leadName" required></div>
+          <div class="field"><label for="leadEmail">Adresse e-mail</label><input type="email" id="leadEmail" required></div>
           <button type="submit" class="lead-submit">RECEVOIR MES RESSOURCES</button>
         </form>
         <div class="lead-confirm" id="leadConfirm">Merci ! Vérifiez votre boîte mail très bientôt.</div>
       </div>
     </div>
+  </section>
+</div>
 
+<!-- ============================================================ STORE VIEW ============================================================ -->
+<div class="view" id="view-store">
+  <div class="store-head">
+    <div class="eyebrow" style="justify-content:center;">Boutique</div>
+    <h2>Livres d'anglais</h2>
+    <p style="color:var(--ink-soft); margin-top:12px;">Des ressources PDF conçues pour chaque niveau, du débutant à l'avancé.</p>
   </div>
-</section>
+  <div class="store-layout">
+    <aside>
+      <div class="filter-group">
+        <h4>Niveau</h4>
+        <div id="filterLevels"></div>
+      </div>
+      <div class="filter-group">
+        <h4>Prix</h4>
+        <label class="filter-opt"><input type="radio" name="priceFilter" value="all" checked> Tous les prix</label>
+        <label class="filter-opt"><input type="radio" name="priceFilter" value="lt3"> Moins de $3</label>
+        <label class="filter-opt"><input type="radio" name="priceFilter" value="3to5"> $3 – $5</label>
+        <label class="filter-opt"><input type="radio" name="priceFilter" value="gt5"> Plus de $5</label>
+      </div>
+    </aside>
+    <div>
+      <div class="sort-row">
+        <span id="storeCount">0 livres</span>
+        <select id="sortSelect">
+          <option value="level">Trier par niveau</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+        </select>
+      </div>
+      <div class="store-grid" id="storeGrid"></div>
+      <div class="store-empty" id="storeEmpty" style="display:none;">Aucun livre ne correspond à ces filtres.</div>
+    </div>
+  </div>
+</div>
 
-<section class="features" id="lecons">
-  <div class="section-head">
-    <div class="eyebrow">Nos leçons</div>
-    <h2>Une méthode pensée pour les francophones</h2>
-    <p>Chaque leçon cible les difficultés typiques des apprenants francophones — prononciation, faux-amis, structures de phrases.</p>
+<!-- ============================================================ PRODUCT VIEW ============================================================ -->
+<div class="view" id="view-product">
+  <div class="product-page">
+    <div class="breadcrumb"><a onclick="Router.go('store')">Livres</a> / <span id="pdBreadcrumb"></span></div>
+    <div class="product-detail">
+      <div class="product-cover" id="pdCover"><div class="band"></div><h4 id="pdCoverTitle"></h4></div>
+      <div>
+        <div class="pd-level" id="pdLevel"></div>
+        <h1 id="pdTitle"></h1>
+        <p class="pd-desc" id="pdDesc"></p>
+        <div class="pd-learn">
+          <h4>Ce que vous allez apprendre</h4>
+          <ul id="pdLearnList"></ul>
+        </div>
+        <div class="pd-price-row">
+          <div class="pd-price" id="pdPrice"></div>
+        </div>
+        <div class="pd-actions">
+          <button class="btn-primary red" id="pdBuyBtn">Obtenir le livre</button>
+          <button class="btn-ghost" onclick="Router.go('store')">Retour aux livres</button>
+        </div>
+        <p class="pd-note" id="pdRecommendNote"></p>
+      </div>
+    </div>
+    <div class="pd-related">
+      <h3>Vous aimerez aussi</h3>
+      <div class="pd-related-grid" id="pdRelatedGrid"></div>
+    </div>
   </div>
-  <div class="feature-grid">
-    <div class="feature">
-      <div class="num">01</div>
-      <h3>Expressions du quotidien</h3>
-      <p>Apprenez à parler comme un natif dans les situations de tous les jours : au travail, en voyage, entre amis.</p>
-    </div>
-    <div class="feature">
-      <div class="num">02</div>
-      <h3>Grammaire sans douleur</h3>
-      <p>Des explications claires en français pour comprendre enfin les temps, les prépositions et les structures anglaises.</p>
-    </div>
-    <div class="feature">
-      <div class="num">03</div>
-      <h3>Pratique à l'oral</h3>
-      <p>Des exercices conçus pour vous faire parler avec confiance, sans peur de l'accent ou des erreurs.</p>
-    </div>
-  </div>
-</section>
+</div>
 
-<section class="book" id="livre">
-  <div class="book-grid">
-    <div class="book-cover">
-      <div class="band"></div>
-      <h4>SPEAK ENGLISH<br>WITH CONFIDENCE</h4>
-      <p>100 Everyday English Expressions Every French Speaker Should Know</p>
-    </div>
-    <div class="book-copy">
-      <div class="eyebrow">Le livre</div>
-      <h2>100 expressions essentielles pour parler anglais au quotidien</h2>
-      <p class="desc">Un guide pratique pensé pour les francophones, avec des expressions réelles, des exemples concrets et des explications simples pour parler anglais avec naturel et confiance.</p>
-      <ul class="book-list">
-        <li>100 expressions authentiques utilisées par les natifs</li>
-        <li>Explications claires, en français</li>
-        <li>Exemples et mises en situation réelles</li>
-      </ul>
-      <button class="btn-primary red">Découvrir le livre</button>
-    </div>
+<!-- ============================================================ THANK YOU VIEW ============================================================ -->
+<div class="view" id="view-thankyou">
+  <div class="product-page" style="text-align:center; max-width:640px;">
+    <div class="eyebrow" style="justify-content:center;">Commande confirmée</div>
+    <h2 style="margin-bottom:16px;">Merci pour votre achat</h2>
+    <p style="color:var(--ink-soft); line-height:1.7; margin-bottom:8px;" id="thankYouBook"></p>
+    <p style="color:var(--ink-soft); line-height:1.7; margin-bottom:36px;">Un e-mail contenant votre lien de téléchargement vous sera envoyé sous peu.</p>
+    <div class="reco-more-label" style="text-align:center;">Vous aimerez aussi</div>
+    <div class="reco-more-grid" id="thankYouGrid" style="margin-bottom:10px;"></div>
+    <button class="btn-ghost" style="margin-top:20px;" onclick="Router.go('store')">Retour à la boutique</button>
   </div>
-</section>
+</div>
 
 <footer id="contact">
   <div class="footer-grid">
-    <div>
-      <div class="footer-brand">EASY SPEAK ACADEMY</div>
-      <div>Learn · Speak · Grow</div>
-    </div>
+    <div><div class="footer-brand">EASY SPEAK ACADEMY</div><div>Learn · Speak · Grow</div></div>
     <div class="footer-links">
-      <a href="#accueil">Accueil</a>
-      <a href="#test">Testez votre niveau</a>
-      <a href="#lecons">Leçons</a>
-      <a href="#livre">Livre</a>
-      <a href="#contact">Contact</a>
+      <a onclick="Router.go('home')">Accueil</a>
+      <a onclick="Router.go('test')">Testez votre niveau</a>
+      <a onclick="Router.go('store')">Livres</a>
+      <a onclick="Router.go('home','lecons')">Leçons</a>
+      <a onclick="Router.go('home','contact')">Contact</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -510,40 +529,266 @@
   </div>
 </footer>
 
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Fermer">&times;</button>
+    <h3 id="modalTitle">Confirmer l'achat</h3>
+    <p id="modalDesc">Vous êtes sur le point d'obtenir ce livre au format PDF.</p>
+    <button class="btn-primary red" id="modalConfirm" style="width:100%;">Acheter maintenant</button>
+  </div>
+</div>
+
 <script>
-/* ============ MOBILE NAV ============ */
+/* ===================================================================
+   PRODUCT DATA — single source of truth. Replace/add books here.
+=================================================================== */
+const LEVEL_ORDER = ['A1','A2','B1','B2','C1'];
+const LEVEL_LABELS = {
+  A1:'Débutant', A2:'Élémentaire', B1:'Intermédiaire', B2:'Intermédiaire avancé', C1:'Avancé'
+};
+
+const PRODUCTS = [
+  {id:'a1-1', level:'A1', title:'English from Zero', price:2.99,
+    desc:"Démarrez de zéro avec les bases essentielles de l'anglais : alphabet, chiffres, phrases simples et vocabulaire du quotidien.",
+    learn:['Vocabulaire de base','Phrases simples','Prononciation des sons clés','Premiers dialogues']},
+  {id:'a1-2', level:'A1', title:'My First 500 English Words', price:3.99,
+    desc:"500 mots essentiels organisés par thème pour construire rapidement un premier socle de vocabulaire solide.",
+    learn:['500 mots essentiels','Thèmes du quotidien','Exemples de phrases','Fiches de révision']},
+  {id:'a1-3', level:'A1', title:'Basic English Conversations', price:4.99,
+    desc:"Des dialogues courts et réalistes pour apprendre à échanger dans des situations simples : se présenter, commander, demander son chemin.",
+    learn:['Dialogues guidés','Formules de politesse','Questions du quotidien','Écoute et répétition']},
+
+  {id:'a2-1', level:'A2', title:'Everyday English for Beginners', price:2.99,
+    desc:"Consolidez vos bases avec des expressions utilisées chaque jour par les anglophones, expliquées simplement en français.",
+    learn:['Expressions courantes','Temps présent et passé','Vocabulaire élargi','Mises en situation']},
+  {id:'a2-2', level:'A2', title:'English Conversations A2', price:3.99,
+    desc:"Des conversations progressives pour gagner en aisance à l'oral dans des contextes familiers : famille, travail, loisirs.",
+    learn:['Dialogues thématiques','Structures de phrases','Vocabulaire social','Confiance à l\'oral']},
+  {id:'a2-3', level:'A2', title:'Build Your English Vocabulary', price:4.99,
+    desc:"Un entraînement structuré pour doubler votre vocabulaire actif et reconnaître plus facilement l'anglais à l'écrit comme à l'oral.",
+    learn:['Vocabulaire par thème','Synonymes utiles','Exercices pratiques','Auto-évaluation']},
+
+  {id:'b1-1', level:'B1', title:'Speak English with Confidence', price:2.99,
+    desc:"100 expressions anglaises du quotidien que tout francophone devrait connaître pour parler avec plus de naturel.",
+    learn:['100 expressions authentiques','Explications en français','Exemples réels','Mises en situation']},
+  {id:'b1-2', level:'B1', title:'500 Natural English Expressions', price:3.99,
+    desc:"Un recueil d'expressions naturelles utilisées par les anglophones, pour sonner moins scolaire et plus authentique.",
+    learn:['500 expressions','Contextes d\'usage','Nuances de sens','Phrases types']},
+  {id:'b1-3', level:'B1', title:'Intermediate English Conversations', price:4.99,
+    desc:"Des dialogues plus riches pour tenir une conversation fluide sur des sujets variés : travail, voyages, actualité.",
+    learn:['Dialogues avancés','Fluidité à l\'oral','Connecteurs logiques','Vocabulaire varié']},
+
+  {id:'b2-1', level:'B2', title:'Advanced Everyday English', price:3.99,
+    desc:"Affinez votre anglais du quotidien avec des tournures plus précises et des nuances que les niveaux intermédiaires ratent souvent.",
+    learn:['Nuances de vocabulaire','Expressions idiomatiques','Registres de langue','Précision grammaticale']},
+  {id:'b2-2', level:'B2', title:'Speak Naturally in English', price:4.99,
+    desc:"Apprenez à formuler vos idées comme un natif, avec des structures naturelles plutôt que des traductions littérales du français.",
+    learn:['Structures naturelles','Éviter les calques du français','Expressions idiomatiques','Pratique orale guidée']},
+  {id:'b2-3', level:'B2', title:'Business English Essentials', price:5.99,
+    desc:"Le vocabulaire et les formulations essentielles pour communiquer professionnellement à l'écrit et à l'oral.",
+    learn:['E-mails professionnels','Réunions et présentations','Vocabulaire métier','Ton professionnel']},
+
+  {id:'c1-1', level:'C1', title:'Mastering Natural English', price:4.99,
+    desc:"Perfectionnez votre anglais avec des nuances fines de sens, de ton et de registre pour communiquer avec aisance sur tout sujet.",
+    learn:['Nuances fines de sens','Registres de langue','Fluidité avancée','Expression naturelle']},
+  {id:'c1-2', level:'C1', title:'Advanced English Vocabulary', price:5.99,
+    desc:"Un vocabulaire riche et précis pour exprimer des idées complexes et nuancées, à l'écrit comme à l'oral.",
+    learn:['Vocabulaire soutenu','Idées complexes','Synonymes précis','Expression écrite avancée']},
+  {id:'c1-3', level:'C1', title:'Professional English Communication', price:5.99,
+    desc:"Communiquez avec impact dans un contexte professionnel exigeant : négociation, argumentation, présentation.",
+    learn:['Argumentation','Négociation','Présentations orales','Communication d\'impact']},
+];
+
+const BUNDLES = {
+  A1: {title:'PACK A1 — DÉMARRAGE COMPLET', bookIds:['a1-1','a1-2','a1-3'], price:9.99, originalPrice:11.97},
+  A2: {title:'PACK A2 — BASES SOLIDES', bookIds:['a2-1','a2-2','a2-3'], price:9.99, originalPrice:11.97},
+  B1: {title:'PACK B1 — COMPLETE ENGLISH BOOST', bookIds:['b1-1','b1-2','b1-3'], price:9.99, originalPrice:11.97},
+  B2: {title:'PACK B2 — NIVEAU AVANCÉ', bookIds:['b2-1','b2-2','b2-3'], price:12.99, originalPrice:14.97},
+  C1: {title:'PACK C1 — MAÎTRISE COMPLÈTE', bookIds:['c1-1','c1-2','c1-3'], price:14.99, originalPrice:17.97},
+};
+
+function getProduct(id){ return PRODUCTS.find(p => p.id === id); }
+function getProductsByLevel(level){ return PRODUCTS.filter(p => p.level === level); }
+function fmtPrice(n){ return '$' + n.toFixed(2); }
+
+/* ===================================================================
+   PRODUCT CARD RENDERING
+=================================================================== */
+function productCardHTML(p){
+  return '<div class="product-card">' +
+    '<div class="product-cover"><span class="lvl-pin">' + p.level + '</span><div class="band"></div><h4>' + p.title + '</h4></div>' +
+    '<div class="product-body">' +
+      '<h3>' + p.title + '</h3>' +
+      '<p class="desc">' + p.desc + '</p>' +
+      '<div class="product-foot"><span class="price">' + fmtPrice(p.price) + '</span>' +
+      '<button class="btn-primary sm" onclick="Router.go(\'product\',null,\'' + p.id + '\')">Découvrir</button></div>' +
+    '</div></div>';
+}
+
+/* ===================================================================
+   ROUTER
+=================================================================== */
+const Router = {
+  current: 'home',
+  currentParam: null,
+  go: function(route, anchor, param){
+    this.current = route;
+    this.currentParam = param || null;
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + route).classList.add('active');
+    document.querySelectorAll('nav.links a').forEach(a => a.classList.toggle('current', a.dataset.route === route));
+    document.getElementById('navLinks').classList.remove('open');
+    window.scrollTo(0,0);
+
+    if(route === 'store') renderStore();
+    if(route === 'product' && param) renderProductPage(param);
+    if(route === 'thankyou' && param) renderThankYou(param);
+
+    let hash = '#/' + route;
+    if(param) hash += '/' + param;
+    history.replaceState(null, '', hash);
+
+    if(anchor){
+      setTimeout(function(){
+        const el = document.getElementById(anchor);
+        if(el) el.scrollIntoView({behavior:'smooth'});
+      }, 50);
+    }
+  }
+};
+
+document.querySelectorAll('nav.links a').forEach(function(a){
+  a.addEventListener('click', function(){
+    Router.go(a.dataset.route, a.dataset.anchor || null);
+  });
+});
+
 document.getElementById('burgerBtn').addEventListener('click', function(){
   document.getElementById('navLinks').classList.toggle('open');
 });
-document.querySelectorAll('#navLinks a').forEach(function(a){
-  a.addEventListener('click', function(){ document.getElementById('navLinks').classList.remove('open'); });
-});
 
-/* ============ QUESTION BANK ============ */
-/* level: A1 A2 B1 B2 C1 — answer index is 0-based into options array */
+/* ===================================================================
+   HOME — featured books teaser (one per level, alternating sample)
+=================================================================== */
+function renderHomeFeatured(){
+  const sample = ['b1-1','a2-2','b2-2'].map(getProduct).filter(Boolean);
+  document.getElementById('homeFeaturedGrid').innerHTML = sample.map(productCardHTML).join('');
+}
+
+/* ===================================================================
+   STORE PAGE
+=================================================================== */
+let storeFilters = { levels: new Set(), price: 'all', sort: 'level' };
+
+function initStoreFilters(){
+  const container = document.getElementById('filterLevels');
+  container.innerHTML = LEVEL_ORDER.map(function(lvl){
+    return '<label class="filter-opt"><input type="checkbox" value="' + lvl + '" class="lvl-filter-cb"> ' + lvl + ' — ' + LEVEL_LABELS[lvl] + '</label>';
+  }).join('');
+  container.querySelectorAll('.lvl-filter-cb').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      if(cb.checked) storeFilters.levels.add(cb.value); else storeFilters.levels.delete(cb.value);
+      renderStore();
+    });
+  });
+  document.querySelectorAll('input[name="priceFilter"]').forEach(function(r){
+    r.addEventListener('change', function(){ storeFilters.price = r.value; renderStore(); });
+  });
+  document.getElementById('sortSelect').addEventListener('change', function(e){
+    storeFilters.sort = e.target.value; renderStore();
+  });
+}
+
+function renderStore(){
+  let list = PRODUCTS.slice();
+  if(storeFilters.levels.size > 0){
+    list = list.filter(p => storeFilters.levels.has(p.level));
+  }
+  if(storeFilters.price === 'lt3') list = list.filter(p => p.price < 3);
+  if(storeFilters.price === '3to5') list = list.filter(p => p.price >= 3 && p.price <= 5);
+  if(storeFilters.price === 'gt5') list = list.filter(p => p.price > 5);
+
+  if(storeFilters.sort === 'price-asc') list.sort((a,b) => a.price - b.price);
+  else if(storeFilters.sort === 'price-desc') list.sort((a,b) => b.price - a.price);
+  else list.sort((a,b) => LEVEL_ORDER.indexOf(a.level) - LEVEL_ORDER.indexOf(b.level));
+
+  document.getElementById('storeCount').textContent = list.length + (list.length > 1 ? ' livres' : ' livre');
+  const grid = document.getElementById('storeGrid');
+  const empty = document.getElementById('storeEmpty');
+  if(list.length === 0){
+    grid.innerHTML = ''; empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    grid.innerHTML = list.map(productCardHTML).join('');
+  }
+}
+
+/* ===================================================================
+   PRODUCT PAGE
+=================================================================== */
+function renderProductPage(id){
+  const p = getProduct(id);
+  if(!p){ Router.go('store'); return; }
+  document.getElementById('pdBreadcrumb').textContent = p.title;
+  document.getElementById('pdCoverTitle').textContent = p.title;
+  document.getElementById('pdLevel').textContent = p.level + ' — ' + LEVEL_LABELS[p.level];
+  document.getElementById('pdTitle').textContent = p.title;
+  document.getElementById('pdDesc').textContent = p.desc;
+  document.getElementById('pdLearnList').innerHTML = p.learn.map(l => '<li>' + l + '</li>').join('');
+  document.getElementById('pdPrice').textContent = fmtPrice(p.price);
+  document.getElementById('pdRecommendNote').textContent = 'Ce livre est recommandé pour les apprenants de niveau ' + p.level + '.';
+
+  document.getElementById('pdBuyBtn').onclick = function(){ openCheckout(p); };
+
+  const related = getProductsByLevel(p.level).filter(x => x.id !== p.id).slice(0,3);
+  document.getElementById('pdRelatedGrid').innerHTML = related.map(productCardHTML).join('');
+}
+
+/* ===================================================================
+   CHECKOUT MODAL (demo flow — no real payment backend)
+=================================================================== */
+const modal = document.getElementById('checkoutModal');
+function openCheckout(product){
+  document.getElementById('modalTitle').textContent = product.title;
+  document.getElementById('modalDesc').textContent = 'Vous êtes sur le point d\'obtenir ce livre au format PDF pour ' + fmtPrice(product.price) + '.';
+  document.getElementById('modalConfirm').onclick = function(){
+    modal.classList.remove('open');
+    Router.go('thankyou', null, product.id);
+  };
+  modal.classList.add('open');
+}
+document.getElementById('modalClose').addEventListener('click', function(){ modal.classList.remove('open'); });
+modal.addEventListener('click', function(e){ if(e.target === modal) modal.classList.remove('open'); });
+
+function renderThankYou(id){
+  const p = getProduct(id);
+  if(!p) return;
+  document.getElementById('thankYouBook').textContent = 'Votre commande « ' + p.title + ' » (' + fmtPrice(p.price) + ') a bien été enregistrée.';
+  const others = getProductsByLevel(p.level).filter(x => x.id !== p.id).slice(0,2);
+  document.getElementById('thankYouGrid').innerHTML = others.map(productCardHTML).join('');
+}
+
+/* ===================================================================
+   ENGLISH LEVEL TEST
+=================================================================== */
 const QUESTIONS = [
-  // A1 — 1-5
   {level:'A1', text:"I _____ a student.", options:["am","is","are","be"], answer:0},
   {level:'A1', text:"She _____ to work every day.", options:["go","goes","going","gone"], answer:1},
   {level:'A1', text:"This is _____ book.", options:["I","my","me","mine's"], answer:1},
   {level:'A1', text:"There _____ two cats in the garden.", options:["is","are","be","was"], answer:1},
   {level:'A1', text:"What time _____ it?", options:["is","does","are","do"], answer:0},
-  // A2 — 6-9
   {level:'A2', text:"He _____ TV when I called him.", options:["watch","was watching","watches","watched watching"], answer:1},
   {level:'A2', text:"I have lived here _____ 2019.", options:["for","since","during","from"], answer:1},
   {level:'A2', text:"You _____ smoke in the hospital.", options:["mustn't","don't must","not must","musn't to"], answer:0},
   {level:'A2', text:"If it rains tomorrow, we _____ stay home.", options:["will","would","are","did"], answer:0},
-  // B1 — 10-13
   {level:'B1', text:"By the time we arrived, the film _____.", options:["already started","had already started","has already started","was already starting"], answer:1},
   {level:'B1', text:"She's the woman _____ car was stolen last week.", options:["who","which","whose","that"], answer:2},
   {level:'B1', text:"I wish I _____ more time to finish this project.", options:["have","had","would have","having"], answer:1},
-  {level:'B1', text:"Choose the correct word: The meeting was cancelled _____ the bad weather.", options:["because","because of","due","so"], answer:1},
-  // B2 — 14-17
+  {level:'B1', text:"The meeting was cancelled _____ the bad weather.", options:["because","because of","due","so"], answer:1},
   {level:'B2', text:"Hardly _____ the meeting started when the fire alarm went off.", options:["had","did","has","was"], answer:0},
   {level:'B2', text:"The report is due _____ Friday, so please finish it soon.", options:["until","by","for","since"], answer:1},
   {level:'B2', text:"He suggested _____ the proposal before submitting it.", options:["to revise","revising","revise","revised"], answer:1},
   {level:'B2', text:"Choose the most natural sentence.", options:["It's up to you to decide what you want.","It is on you to decide what you want.","It's depending of you what you want.","It's yours to decide what you want to."], answer:0},
-  // C1 — 18-20
   {level:'C1', text:"Not only _____ the deadline, but she also improved the final quality of the report.", options:["she met","did she meet","she did meet","meets she"], answer:1},
   {level:'C1', text:"Choose the closest meaning: 'He was reluctant to accept the offer.'", options:["He refused the offer immediately.","He was unwilling to accept the offer.","He accepted the offer gladly.","He didn't understand the offer."], answer:1},
   {level:'C1', text:"Were the negotiations to fail, the company _____ significant losses.", options:["would face","will face","faces","had faced"], answer:0},
@@ -552,6 +797,7 @@ const QUESTIONS = [
 const TOTAL = QUESTIONS.length;
 let answers = new Array(TOTAL).fill(null);
 let current = 0;
+let lastResultLevel = null;
 
 const viewIntro = document.getElementById('viewIntro');
 const viewQuestion = document.getElementById('viewQuestion');
@@ -564,47 +810,13 @@ const progressFill = document.getElementById('progressFill');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
-/* ---- state persisted via URL hash so a refresh doesn't lose progress ---- */
-function saveState(){
-  try{
-    const payload = {c: current, a: answers, started: viewQuestion.style.display !== 'none' || viewResult.style.display === 'block'};
-    history.replaceState(null, '', '#test-state=' + encodeURIComponent(JSON.stringify(payload)));
-  }catch(e){}
-}
-function loadState(){
-  try{
-    const h = window.location.hash;
-    const marker = '#test-state=';
-    if(h.indexOf(marker) === 0){
-      const payload = JSON.parse(decodeURIComponent(h.slice(marker.length)));
-      if(payload && Array.isArray(payload.a) && payload.a.length === TOTAL){
-        answers = payload.a;
-        current = Math.min(payload.c || 0, TOTAL - 1);
-        if(payload.started){
-          const allAnswered = answers.every(v => v !== null);
-          if(allAnswered && current === TOTAL - 1 && wasOnResult()){
-            showResult();
-          } else {
-            startTest(false);
-          }
-        }
-      }
-    }
-  }catch(e){}
-}
-function wasOnResult(){
-  return answers.every(v => v !== null);
-}
-
 document.getElementById('startBtn').addEventListener('click', function(){ startTest(true); });
 
 function startTest(reset){
-  if(reset){
-    answers = new Array(TOTAL).fill(null);
-    current = 0;
-  }
+  if(reset){ answers = new Array(TOTAL).fill(null); current = 0; }
   viewIntro.style.display = 'none';
   viewResult.style.display = 'none';
+  document.getElementById('recoBlock').style.display = 'none';
   viewQuestion.style.display = 'block';
   renderQuestion();
 }
@@ -614,8 +826,7 @@ function renderQuestion(){
   qCounter.textContent = 'Question ' + (current+1) + ' sur ' + TOTAL;
   qLevel.textContent = q.level;
   qText.textContent = q.text;
-  progressFill.style.width = (((current) / TOTAL) * 100) + '%';
-
+  progressFill.style.width = ((current / TOTAL) * 100) + '%';
   qOptions.innerHTML = '';
   const letters = ['A','B','C','D'];
   q.options.forEach(function(opt, idx){
@@ -623,64 +834,41 @@ function renderQuestion(){
     btn.className = 'opt' + (answers[current] === idx ? ' selected' : '');
     btn.setAttribute('type','button');
     btn.innerHTML = '<span class="letter">' + letters[idx] + '</span><span>' + opt + '</span>';
-    btn.addEventListener('click', function(){
-      answers[current] = idx;
-      saveState();
-      renderQuestion();
-    });
+    btn.addEventListener('click', function(){ answers[current] = idx; renderQuestion(); });
     qOptions.appendChild(btn);
   });
-
   prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
   nextBtn.textContent = current === TOTAL - 1 ? 'Voir mon résultat →' : 'Suivant →';
   nextBtn.classList.toggle('active', answers[current] !== null);
-  saveState();
 }
 
-prevBtn.addEventListener('click', function(){
-  if(current > 0){ current--; renderQuestion(); }
-});
-
+prevBtn.addEventListener('click', function(){ if(current > 0){ current--; renderQuestion(); } });
 nextBtn.addEventListener('click', function(){
   if(answers[current] === null) return;
-  if(current < TOTAL - 1){
-    current++;
-    renderQuestion();
-  } else {
-    showResult();
-  }
+  if(current < TOTAL - 1){ current++; renderQuestion(); } else { showResult(); }
 });
 
-/* keyboard support: number keys 1-4 select option, enter/arrow to navigate */
 document.addEventListener('keydown', function(e){
-  if(viewQuestion.style.display === 'none') return;
+  if(Router.current !== 'test' || viewQuestion.style.display === 'none') return;
   if(['1','2','3','4'].includes(e.key)){
     const idx = parseInt(e.key,10) - 1;
-    if(idx < QUESTIONS[current].options.length){
-      answers[current] = idx;
-      saveState();
-      renderQuestion();
-    }
-  } else if(e.key === 'Enter' && answers[current] !== null){
-    nextBtn.click();
-  } else if(e.key === 'ArrowLeft'){
-    prevBtn.click();
-  }
+    if(idx < QUESTIONS[current].options.length){ answers[current] = idx; renderQuestion(); }
+  } else if(e.key === 'Enter' && answers[current] !== null){ nextBtn.click(); }
+  else if(e.key === 'ArrowLeft'){ prevBtn.click(); }
 });
 
 function levelFromScore(score){
   if(score <= 5) return {code:'A1', label:'DÉBUTANT', text:"Vous êtes au niveau débutant. Vous comprenez et utilisez des expressions anglaises de base, mais vous devez encore développer votre vocabulaire, votre grammaire et votre confiance."};
   if(score <= 9) return {code:'A2', label:'ÉLÉMENTAIRE', text:"Vous pouvez communiquer dans des situations familières du quotidien. Votre prochaine étape est d'enrichir votre vocabulaire et de gagner en aisance pour former des phrases complètes."};
-  if(score <= 13) return {code:'B1', label:'INTERMÉDIAIRE', text:"Vous pouvez comprendre et communiquer dans de nombreuses situations quotidiennes. Concentrez-vous sur l'amélioration de votre fluidité, de votre vocabulaire et de votre précision."};
+  if(score <= 13) return {code:'B1', label:'INTERMÉDIAIRE', text:"Vous avez déjà une bonne base en anglais. Vous pouvez comprendre et communiquer dans de nombreuses situations quotidiennes. Votre prochaine étape est d'améliorer votre fluidité, votre vocabulaire et votre précision."};
   if(score <= 17) return {code:'B2', label:'INTERMÉDIAIRE AVANCÉ', text:"Vous avez un bon niveau intermédiaire et pouvez communiquer efficacement dans de nombreuses situations. Travaillez les expressions naturelles, la précision et le vocabulaire avancé."};
   return {code:'C1', label:'AVANCÉ', text:"Vous avez un niveau avancé d'anglais et pouvez communiquer avec confiance sur des sujets complexes. Continuez à affiner votre fluidité, votre vocabulaire et votre expression naturelle."};
 }
 
 function showResult(){
-  const score = answers.reduce(function(sum, a, i){
-    return sum + (a === QUESTIONS[i].answer ? 1 : 0);
-  }, 0);
+  const score = answers.reduce(function(sum, a, i){ return sum + (a === QUESTIONS[i].answer ? 1 : 0); }, 0);
   const lvl = levelFromScore(score);
+  lastResultLevel = lvl.code;
 
   document.getElementById('resultLevel').textContent = lvl.code + ' — ' + lvl.label;
   document.getElementById('resultScore').textContent = 'Score : ' + score + '/' + TOTAL;
@@ -688,20 +876,23 @@ function showResult(){
 
   const scaleEl = document.getElementById('resultScale');
   scaleEl.innerHTML = '';
-  for(let i=0;i<20;i++){
-    const s = document.createElement('span');
-    if(i < score) s.classList.add('filled');
-    scaleEl.appendChild(s);
-  }
+  for(let i=0;i<20;i++){ const s = document.createElement('span'); if(i < score) s.classList.add('filled'); scaleEl.appendChild(s); }
 
   viewQuestion.style.display = 'none';
   viewIntro.style.display = 'none';
   viewResult.style.display = 'block';
-  saveState();
+  document.getElementById('recoBlock').style.display = 'none';
 }
+
+document.getElementById('seeRecoBtn').addEventListener('click', function(){
+  renderRecommendations(lastResultLevel);
+  document.getElementById('recoBlock').style.display = 'block';
+  setTimeout(function(){ document.getElementById('recoBlock').scrollIntoView({behavior:'smooth'}); }, 50);
+});
 
 document.getElementById('restartBtn').addEventListener('click', function(){
   viewResult.style.display = 'none';
+  document.getElementById('recoBlock').style.display = 'none';
   document.getElementById('leadForm').style.display = 'block';
   document.getElementById('leadConfirm').style.display = 'none';
   document.getElementById('leadFormEl').style.display = 'block';
@@ -714,8 +905,62 @@ document.getElementById('leadFormEl').addEventListener('submit', function(e){
   document.getElementById('leadConfirm').style.display = 'block';
 });
 
-/* init from URL hash if present, else show intro */
-loadState();
+/* ===================================================================
+   RECOMMENDATION ENGINE — driven entirely by PRODUCTS + BUNDLES
+=================================================================== */
+function renderRecommendations(level){
+  document.getElementById('recoLevelLine').textContent =
+    'Sur la base de votre niveau estimé : ' + level + ' — ' + LEVEL_LABELS[level] + '.';
+
+  const levelBooks = getProductsByLevel(level);
+  const main = levelBooks[0];
+  const more = levelBooks.slice(1);
+
+  document.getElementById('recoMain').innerHTML =
+    '<div class="reco-main-inner">' +
+      '<div class="product-cover" style="aspect-ratio:3/4; border-radius:6px;"><span class="lvl-pin">' + main.level + '</span><div class="band"></div><h4>' + main.title + '</h4></div>' +
+      '<div>' +
+        '<div class="pd-level">' + main.level + ' — ' + LEVEL_LABELS[main.level] + '</div>' +
+        '<h3 style="font-size:1.4rem; margin-bottom:12px;">' + main.title + '</h3>' +
+        '<p style="color:var(--ink-soft); line-height:1.65; margin-bottom:20px;">' + main.desc + '</p>' +
+        '<div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">' +
+          '<span class="price" style="font-size:1.3rem;">' + fmtPrice(main.price) + '</span>' +
+          '<button class="btn-primary red" onclick="Router.go(\'product\',null,\'' + main.id + '\')">Découvrir le livre</button>' +
+          '<button class="btn-ghost" onclick="openCheckout(getProduct(\'' + main.id + '\'))">Acheter maintenant</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  document.getElementById('recoMoreGrid').innerHTML = more.map(productCardHTML).join('');
+
+  const bundle = BUNDLES[level];
+  if(bundle){
+    document.getElementById('bundleCard').innerHTML =
+      '<div><h4>' + bundle.title + '</h4><p>Les 3 livres du niveau ' + level + ' réunis, au prix le plus avantageux.</p></div>' +
+      '<div class="bundle-price"><span class="old">' + fmtPrice(bundle.originalPrice) + '</span>' +
+      '<span class="new">' + fmtPrice(bundle.price) + '</span></div>';
+  }
+}
+
+/* ===================================================================
+   INIT
+=================================================================== */
+renderHomeFeatured();
+initStoreFilters();
+
+(function initRoute(){
+  const h = window.location.hash;
+  const m = h.match(/^#\/(\w+)(?:\/([\w-]+))?/);
+  if(m){
+    const route = m[1];
+    const param = m[2];
+    if(document.getElementById('view-' + route)){
+      Router.go(route, null, param);
+      return;
+    }
+  }
+  Router.go('home');
+})();
 </script>
 
 </body>
